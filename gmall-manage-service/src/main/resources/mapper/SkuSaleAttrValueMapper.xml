@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.baidu.gmall0311.manage.mapper.SkuSaleAttrValueMapper">
+
+    <resultMap id="skuSaleAttrValueMap" type="com.baidu.gmall0311.bean.SkuSaleAttrValue" autoMapping="true">
+
+        <id property="id" column="id"></id>
+    </resultMap>
+
+    <!--
+        根据spuId 查询与 skuId 相关的销售属性值集合
+      List<SkuSaleAttrValue> selectSkuSaleAttrValueListBySpu(String spuId);
+     -->
+    <select id="selectSkuSaleAttrValueListBySpu" resultMap="skuSaleAttrValueMap">
+
+           SELECT
+                sale_attr_value_id,
+                sku_id,
+                sale_attr_value_name
+            FROM
+                sku_sale_attr_value ssav,
+                sku_info si
+            WHERE
+                ssav.sku_id = si.id
+            AND si.spu_id = #{spuId}
+            ORDER BY si.id ,ssav.sale_attr_id
+
+    </select>
+
+</mapper>
